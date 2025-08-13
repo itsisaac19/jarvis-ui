@@ -1,0 +1,18 @@
+.startup-wrapper {
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+}
+
+.startup-wrapper.fade-out {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+.startup-video video {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
