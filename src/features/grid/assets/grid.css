@@ -1,0 +1,10 @@
+.grid-container {
+    display: grid;
+}
+.grid-item {
+    display: grid;
+}
+.grid-placeholder {
+    width: auto;
+    height: auto;
+}

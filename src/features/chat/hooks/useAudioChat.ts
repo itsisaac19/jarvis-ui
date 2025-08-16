@@ -122,7 +122,7 @@ export const useAudioChat = (): AudioChat => {
                 onStopCallback: onstop
             });
     
-            animateProgressBar(10);
+            animateProgressBar(10000);
     
             currentSocket.onmessage = async (event) => {
                 const data = JSON.parse(event.data) as TranscriptionResponse;

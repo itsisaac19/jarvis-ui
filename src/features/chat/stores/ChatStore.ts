@@ -1,4 +1,4 @@
-// stores/chat-store.ts
+// ChatStore.ts
 import { create } from 'zustand';
 
 export interface Message {
@@ -83,6 +83,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
     setProgressBarValue: (value) => set({ progressBarValue: value }),
     animateProgressBar: (duration) => {
+        // Animate the progress bar over the specified duration in milliseconds
         const startTime = Date.now();
         const animate = () => {
             const elapsed = Date.now() - startTime;

@@ -3,20 +3,40 @@
 }
 
 .header {
-    margin: 50px 0px 10px 0px;
+    margin: 10px 0px 10px 0px;
     font-weight: 500;
     font-size: 40px;
 }
 
+.progress-bar-outer {
+    display: grid;
+    position: relative;
+    transform: translateY(30px);
+}
 .progress-bar {
-    height: 24px;
+    height: 30px;
     width: auto;
     margin: 0px;
     border: none;
 }
+.progress-bar-info {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    display: grid;
+    grid-auto-flow: column;
+    height: 100%;
+    font-size: 16px;
+}
+.progress-bar-info span {
+    margin: auto;
+}
+.progress-bar-info .separator {
+    margin: auto 5px;
+}
 
 .progress-bar::-webkit-progress-value {
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.267);
 }
 
 .progress-bar::-webkit-progress-bar {
@@ -26,9 +46,15 @@
 .chat-wrapper-outer {
     display: grid;
     margin: 4px 10px;
+    opacity: 0;
+}
+.chat-wrapper-inner {
+    display: grid;
+    height: max-content;
 }
 
 .ask-button {
+    z-index: 1;
     cursor: pointer;
     border: none;
     margin: 0;

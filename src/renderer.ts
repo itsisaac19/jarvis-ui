@@ -29,4 +29,6 @@
 import './index.css';
 import './features/startup/assets/startup.css';
 import './features/chat/assets/chat.css';
+import './features/weather/assets/weather.css';
+import './features/grid/assets/grid.css';
 import './app';

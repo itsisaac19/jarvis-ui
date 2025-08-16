@@ -1,0 +1,152 @@
+.weather-widget {
+    display: grid;
+    grid-template-rows: 1fr max-content;
+}
+
+.loading-message {
+    font-size: 14px;
+}
+
+.hourly-weather-wrapper {
+    display: grid;
+    grid-template-rows: max-content 1fr;
+    margin: 0;
+    height: 100px;
+}
+
+.hourly-title {
+    font-size: 14px;
+    margin: 10px 10px 10px 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #aaaaaa;
+}
+
+.hourly-weather-grid-wrapper {
+    display: grid;
+    overflow-x: auto;
+    opacity: 0;
+}
+
+.hourly-weather-grid-wrapper::-webkit-scrollbar {
+    height: 0;
+}
+
+/* Track */
+.hourly-weather-grid-wrapper::-webkit-scrollbar-track {
+    background: #ffffff;
+
+}
+
+/* Handle */
+.hourly-weather-grid-wrapper::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+.hourly-weather-grid-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.hourly-weather-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 1px;
+
+    width: calc(70 * 24px + 1px * 23);
+    /* 24 items, 23 gaps */
+    background: #e2e2e2;
+    border-top: 1px solid #e2e2e2;
+}
+
+.hourly-weather-item {
+    cursor: pointer;
+    background: white;
+}
+.hourly-weather-item:not(.hidden) {
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.hourly-weather-item:hover {
+    box-shadow: 0px 5px 16px 0px #ccc;
+    transform: translateY(-5px);
+}
+.hourly-weather-item:active {
+    box-shadow: 0px 2px 8px 0px #ccc;
+    transform: translateY(0px);
+    transition: box-shadow 0.1s ease, transform 0.1s ease;
+}
+
+.time-wrapper {
+    display: grid;
+    margin: 4px;
+}
+.time {
+    margin: auto;
+    font-size: 13px;
+    color: #aaaaaa;
+}
+.present .time {
+    color: #000000;
+}
+
+.temperature {
+    margin: 0 auto auto auto;
+    color: #aaaaaa;
+}
+.present .temperature {
+    color: #000000;
+}
+
+
+
+.current-weather {
+    margin: 10px;
+}
+.current-weather-inner {
+    opacity: 0;
+    display: grid;
+    height: max-content;
+}
+.current-temp {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.current-weather-bars {
+    margin: 10px 2px;
+    display: grid;
+    grid-auto-flow: row;
+    row-gap: 10px;
+}
+.bar-information {
+    display: grid;
+    grid-template-rows: max-content max-content;
+    gap: 4px;
+}
+.bar-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #252525;
+}
+.bar-wrapper {
+    display: grid;
+}
+.bar {
+    height: 6px;
+    background-color: #e4e4e4;
+    border-radius: 5px;
+    position: relative;
+}
+.bar-value {
+    position: absolute;
+    border-radius: inherit;
+    opacity: 0;
+    top: 0;
+    bottom: 0;
+    left: 0px;
+    display: grid;
+    background-color: #000000;
+}

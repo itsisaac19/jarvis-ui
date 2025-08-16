@@ -20,6 +20,7 @@ export interface PorcupineCore {
 
 interface PorcupineWrapperProps {
     onDetectionCallback: (props: PorcupineCore) => any;
+    onLoadedCallback?: () => any;
 }
 
 export const usePorcupineWrapper = (props: PorcupineWrapperProps) => {
@@ -41,6 +42,9 @@ export const usePorcupineWrapper = (props: PorcupineWrapperProps) => {
     const startPorcupine = async (initCall: Promise<void>) => {
         await initCall;
         await start();
+        if (props.onLoadedCallback) {
+            props.onLoadedCallback();
+        }
     }
 
     useEffect(() => {
