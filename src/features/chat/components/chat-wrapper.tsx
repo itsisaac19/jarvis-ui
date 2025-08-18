@@ -7,11 +7,8 @@ import { useTextToSpeech } from '../hooks/useTextToSpeech';
 import { usePorcupineWrapper } from '../../../hooks/usePorcupineWrapper';
 import { type PorcupineCore } from '../../../hooks/usePorcupineWrapper';
 
-import { gsap } from 'gsap';
-import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
-gsap.registerPlugin(ScrambleTextPlugin) 
-
 import { Howl } from 'howler';
+import { animate, stagger, text } from 'animejs';
 
 const ChatWrapper = () => {
     const { chatBlocks, isReady, progressBarValue } = useChatStore();
@@ -41,44 +38,41 @@ const ChatWrapper = () => {
         onDetectionCallback: porcupineCallback,
         onLoadedCallback: () => {
             console.log('Porcupine is ready');
-            gsap.to('.chat-wrapper-outer', {
-                duration: 0.5,
+            animate('.chat-wrapper-outer', {
+                duration: 500,
                 opacity: 1,
-            }).delay(0.5); // Fade in the chat wrapper
+                delay: 500
+            });
 
-            gsap.to('.progress-bar-outer', {
-                duration: 0.5,
-                transform: 'translateY(0)',
-                ease: "power2.in",
-                onStart: () => {
+            animate('.progress-bar-outer', {
+                duration: 500,
+                transform: {
+                    from: 'translateY(30px)',
+                    to: 'translateY(0px)'
+                },
+                ease: "linear",
+                onBegin: () => {
                     const progressBarSound = new Howl({
-                        src: ['/assets/panel_slide.wav'],
-                        volume: 0.3,
+                        src: ['/assets/servo-up-01-wet.wav'],
+                        volume: 0.7,
                     });
                     progressBarSound.play();
-                }
-            }).delay(1); // Fade in the progress bar wrapper
-
-            gsap.to('.header', {
-                scrambleText: {
-                    text: "Welcome, Isaac.",
-                    revealDelay: 1,
                 },
-                duration: 2,
-                onStart: async () => {
-                    await new Promise(resolve => setTimeout(resolve, 500));
-                    const typingSound = new Howl({
-                        src: ['/assets/typing.wav'],
-                        volume: 0.1,
-                    });
-                    typingSound.play();
+                delay: 1000
+            });
 
-                    typingSound.fade(0, 0.2, 500); // Fade in typing sound
-                    setTimeout(() => {
-                        typingSound.fade(0.2, 0, 300); // Fade out typing sound after 1 second
-                    }, 1000); // Adjust the timing as needed
-                }   
-            }); // Scramble text effect on the header
+            const chars = text.split('.header', {
+                chars: { wrap: 'visible' },
+            });
+
+            chars.addEffect(({ lines, words, chars }) => animate([lines, words, chars], {
+                opacity: { 
+                    from: 0,
+                    to: 1, 
+                    delay: stagger(100, { ease: 'Out(1)', start: 500 }), 
+                    duration: 1000
+                },
+            }));
         }
     });
 

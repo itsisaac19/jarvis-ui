@@ -1927,7 +1927,7 @@ const hardCodedData: OpenMeteoWeatherResponse = {
     }
 }
 
-export const getHardCodedData = (): OpenMeteoWeatherResponse => {
+export const getHardCodedWeatherData = (): OpenMeteoWeatherResponse => {
     return hardCodedData;
 }
 

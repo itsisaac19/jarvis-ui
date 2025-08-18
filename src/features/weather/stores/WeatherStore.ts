@@ -1,7 +1,7 @@
 // WeatherStore.ts
 import { create } from 'zustand';
 import { OpenMeteoWeatherResponse } from '../types/open-meteo-types';
-import { getHardCodedData } from './example-data';
+import { getHardCodedWeatherData } from './example-data';
 
 const OpenMeteoURL = `https://api.open-meteo.com/v1/forecast?latitude=45.0791&longitude=-93.1472&hourly=temperature_2m,precipitation_probability,apparent_temperature,relative_humidity_2m,uv_index,weather_code,precipitation,wind_speed_10m,wind_direction_10m,cloud_cover&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,rain,is_day,showers,snowfall,weather_code,wind_speed_10m,wind_direction_10m,cloud_cover&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`;
 const useHardcodedData = true; // Set to false to disable caching
@@ -36,7 +36,7 @@ export const useWeatherStore = create<WeatherState>((set, get) => ({
                 throw new Error(`Failed to fetch weather data: ${response.status}`);
             }
 
-            const data = useHardcodedData ? getHardCodedData() : await response.json();
+            const data = useHardcodedData ? getHardCodedWeatherData() : await response.json();
             console.log(`Fetched ${useHardcodedData ? 'cached' : 'new'} weather data`);
 
             set({

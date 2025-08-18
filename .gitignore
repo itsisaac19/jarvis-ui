@@ -90,3 +90,6 @@ typings/
 
 # Electron-Forge
 out/
+
+# Google Local Authentication
+google/

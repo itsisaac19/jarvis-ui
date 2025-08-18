@@ -10,6 +10,9 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+import { setupNewsService } from './main/newsService';
+import { setupGmailService } from './main/gmailService';
+
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -23,8 +26,8 @@ const createWindow = (): void => {
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-  // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  setupNewsService();
+  setupGmailService();
 };
 
 // This method will be called when Electron has finished

@@ -29,4 +29,13 @@ body {
 }
 .main-grid > .grid-item {
   background: white;
+
+  /* Prevent the item from expanding beyond its grid area */
+  min-height: 0;
+  min-width: 0;
+
+  max-height: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  overflow: hidden;
 }

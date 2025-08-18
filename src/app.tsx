@@ -6,6 +6,8 @@ import { GridContainer } from './features/grid/components/grid-container';
 import { GridItem } from './features/grid/components/grid-item';
 import { GridPlaceholder } from './features/grid/components/grid-placeholder';
 import { WeatherWidget } from './features/weather/components/weather-widget';
+import { NewsWidget } from './features/news/components/news-widget';
+import { GmailWidget } from './features/gmail/components/gmail-widget';
 
 const App = () => {
     
@@ -21,13 +23,13 @@ const App = () => {
                     <WeatherWidget />
                 </GridItem>
                 <GridItem area="mail">
-                    <GridPlaceholder />
+                    <GmailWidget />
                 </GridItem>
                 <GridItem area="calendar">
                     <GridPlaceholder />
                 </GridItem>
                 <GridItem area="news">
-                    <GridPlaceholder />
+                    <NewsWidget />
                 </GridItem>
                 <GridItem area="settings">
                     <GridPlaceholder />

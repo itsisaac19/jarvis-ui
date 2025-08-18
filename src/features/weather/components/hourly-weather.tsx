@@ -97,10 +97,10 @@ export const HourlyWeather = (props: HourlyWeatherProps) => {
                             item.classList.remove('hidden');
                         }, 50);
 
-                        const computedVolume = (normalizedIndex) * 0.09;
+                        const computedVolume = (normalizedIndex) * 0.1;
 
                         const dropSound = new Howl({
-                            src: ['/assets/panel-clack.wav'],
+                            src: ['/assets/panel-clack-wet.wav'],
                             volume: computedVolume,
                         });
                         dropSound.play();
