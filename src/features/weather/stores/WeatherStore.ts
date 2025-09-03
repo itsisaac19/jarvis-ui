@@ -37,7 +37,7 @@ export const useWeatherStore = create<WeatherState>((set, get) => ({
             }
 
             const data = useHardcodedData ? getHardCodedWeatherData() : await response.json();
-            console.log(`Fetched ${useHardcodedData ? 'cached' : 'new'} weather data`);
+            console.log(`Fetched ${useHardcodedData ? 'cached' : 'new'} weather data`, {data});
 
             set({
                 data,

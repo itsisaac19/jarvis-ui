@@ -24,13 +24,17 @@ export const CurrentWeather = (props: CurrentWeatherProps) => {
     const hourlyWeatherArray = useMemo(() => {
         if (!hourlyData) return [];
         
+        const now = dayjs();
         const presentIndex = hourlyData.time.findIndex(timeStr => {
-            const now = dayjs();
             const time = dayjs(timeStr);
             return time.isAfter(now, 'hour') || time.isSame(now, 'hour');
         });
         
-        return extractHourlyWeatherArray(hourlyData)?.slice(presentIndex, presentIndex + 24) || [];
+        // If no present/future time found, start from index 0
+        const startIndex = presentIndex === -1 ? 0 : presentIndex;
+        
+        const result = extractHourlyWeatherArray(hourlyData)?.slice(startIndex, startIndex + 24) || [];
+        return result;
     }, [hourlyData]);
 
     const playPulses = async (delay: number) => {
@@ -104,6 +108,10 @@ export const CurrentWeather = (props: CurrentWeatherProps) => {
     }, [currentData, hourlyWeatherArray]);
 
     if (!currentData) {
+        return <></>
+    }
+    
+    if (!hourlyWeatherArray.length) {
         return <></>
     }
 
