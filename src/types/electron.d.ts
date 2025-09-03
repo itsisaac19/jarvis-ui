@@ -9,7 +9,7 @@ export interface ElectronAPI {
         data: GmailAuthResponse;
         error?: string 
     }>;
-    fetchGmail: (query: string) => Promise<{ success: boolean; data?: any; error?: string }>;
+    fetchGmail: (query: string) => Promise<{ success: boolean; data?: SerializableGmailMessage[]; error?: string }>;
 }
 
 declare global {

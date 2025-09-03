@@ -8,7 +8,8 @@ import { authenticate } from '@google-cloud/local-auth';
 import { google } from 'googleapis';
 import { type JSONClient } from 'google-auth-library/build/src/auth/googleauth';
 import { type OAuth2Client } from 'google-auth-library/build/src';
-
+import { type gmail_v1 } from 'googleapis/build/src/apis/gmail/v1';
+import { type GaxiosResponseWithHTTP2 } from 'googleapis-common';
 
 const SCOPES = ['https://www.googleapis.com/auth/gmail.modify', 'https://www.googleapis.com/auth/gmail.compose'];
 
@@ -76,6 +77,20 @@ export interface GmailAuthResponse {
     hasValidToken: boolean;
 }
 
+export interface SerializableGmailMessage {
+    id: string;
+    internalDate: string;
+    threadId: string;
+    labelIds: string[];
+    snippet: string;
+    payload: {
+        headers: {
+            name: string;
+            value: string;
+        }[];
+    };
+}
+
 export function setupGmailService() {
     ipcMain.handle('fetch-gmail-auth', async () => {
         try {
@@ -102,6 +117,7 @@ export function setupGmailService() {
             const response = await gmail.users.messages.list({
                 userId: 'me',
                 q: query,
+                maxResults: 10,
             });
 
             if (!response.data.messages) {
@@ -109,10 +125,39 @@ export function setupGmailService() {
                 return { success: true, data: [] };
             }
 
-            const messages = response.data.messages;
-            console.log(`Fetched ${messages.length} messages`);
+            const messageIds = response.data.messages;
+            console.log(`Fetched ${messageIds.length} message IDs.`);
 
-            return { success: true, data: messages };
+            const messages: Promise<GaxiosResponseWithHTTP2<gmail_v1.Schema$Message>>[] = [];
+            messageIds.forEach(msg => {
+                if (msg.id) {
+                    messages.push(gmail.users.messages.get({
+                        userId: 'me',
+                        id: msg.id,
+                        format: 'metadata',
+                        metadataHeaders: ['Subject', 'From', 'Date', 'Received', 'X-Received']
+                    }));
+                }
+            });
+
+            const messageResponses = await Promise.all(messages);
+            console.log(messageResponses[0].data.payload.headers);
+            // Extract only the serializable data
+            const serializedMessages = messageResponses.map(response => ({
+                id: response.data.id,
+                threadId: response.data.threadId,
+                labelIds: response.data.labelIds,
+                snippet: response.data.snippet,
+                internalDate: response.data.internalDate,
+                payload: {
+                    headers: response.data.payload?.headers?.map(header => ({
+                        name: header.name,
+                        value: header.value
+                    }))
+                }
+            }));
+            
+            return { success: true, data: serializedMessages };
         } catch (error) {
             console.error('Error in Gmail service:', error);
             return { 

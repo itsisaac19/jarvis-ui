@@ -3,13 +3,14 @@
 import { create } from 'zustand';
 import { type gmail_v1 } from 'googleapis/build/src/apis/gmail/v1';
 import { type OAuth2Client } from 'google-auth-library/build/src';
-import { GmailAuthResponse } from '../../../main/gmailService';
+import { GmailAuthResponse, SerializableGmailMessage } from '../../../main/gmailService';
+import { MessageManager } from '../utils/MessageManager';
 
 const useHardcodedData = false; // Set to false to disable caching
 
 interface GmailState {
     // State
-    data: gmail_v1.Schema$Message[] | null;
+    data: MessageManager[] | null;
     isLoading: boolean;
     error: string | null;
     lastUpdated: Date | null;
@@ -52,8 +53,14 @@ export const useGmailStore = create<GmailState>((set, get) => ({
             
             if (result.success) {
                 console.log(`Fetched ${useHardcodedData ? 'cached' : ''} mail data`, { response: result.data });
+                const data = result.data as SerializableGmailMessage[];
+                const managedData = data.map(msg => {
+                    const manager = new MessageManager(msg);
+                    return manager;
+                });
+
                 set({
-                    data: result.data,
+                    data: managedData,
                     isLoading: false,
                     lastUpdated: new Date(),
                     error: null
@@ -62,7 +69,7 @@ export const useGmailStore = create<GmailState>((set, get) => ({
                 throw new Error(result.error);
             }
         } catch (error) {
-            console.error('Error fetching news:', error);
+            console.error('Error fetching mail:', error);
             set({
                 isLoading: false,
                 error: error instanceof Error ? error.message : 'Unknown error',

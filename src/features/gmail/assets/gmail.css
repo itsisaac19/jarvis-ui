@@ -1,0 +1,64 @@
+.gmail-widget {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content 1fr;
+    min-width: 0px;
+    min-height: 0px;
+}
+.gmail-widget .widget-label {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0.5em 1em;
+    border-bottom: #e2e2e2 1px solid;
+    color: #2f3031;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+.messages-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    min-width: 0px;
+    min-height: 0px;
+}
+.messages-grid {
+    grid-auto-flow: row;
+    overflow-y: auto;
+}
+.messages-grid::-webkit-scrollbar {
+    width: 0px;
+}
+.message-item {
+    border-bottom: #e2e2e2 1px solid;
+    display: grid;
+    grid-template-rows: max-content max-content;
+    height: max-content;
+    padding: 1em;
+    row-gap: 6px;
+    font-weight: 450;
+}
+
+.message-item .top-line {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 8px;
+    font-size: 14px;
+}
+
+.top-line .internal-date {
+    margin: auto 0 auto auto; 
+    color: #aaa
+}
+
+.bottom-line {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.message-item .sender {
+    color: #aaa;
+}
+.message-item .subject {
+    color: #202124;
+}
