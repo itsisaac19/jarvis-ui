@@ -2,8 +2,10 @@
 import { ipcMain } from 'electron';
 import googleNewsScraper from 'google-news-scraper';
 
+const searchTerm1 = `economy OR business OR startups OR innovation OR industry -shooting -violence -murder -crime`
+
 export function setupNewsService() {
-    ipcMain.handle('fetch-news', async (event, searchTerm = 'breaking news') => {
+    ipcMain.handle('fetch-news', async (event, searchTerm = searchTerm1) => {
         try {
             console.log('Fetching news for:', searchTerm);
             

@@ -25,7 +25,7 @@ export const useNewsStore = create<NewsState>((set, get) => ({
     lastUpdated: null,
     
     // Actions
-    fetchNews: async (searchTerm = "breaking news") => {
+    fetchNews: async (searchTerm) => {
         set({ isLoading: true, error: null });
 
         try {

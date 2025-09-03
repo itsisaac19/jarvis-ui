@@ -22,7 +22,7 @@
     padding: 1em;
 }
 .news-tile .title {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 18px;
     margin-bottom: 0.5em;
 }
