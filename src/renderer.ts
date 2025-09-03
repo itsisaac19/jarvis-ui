@@ -27,9 +27,13 @@
  */
 
 import './index.css';
-import './features/startup/assets/startup.css';
-import './features/chat/assets/chat.css';
-import './features/weather/assets/weather.css';
-import './features/news/assets/news.css';
-import './features/grid/assets/grid.css';
+
+// Auto-import all CSS files from features
+function importAll(r: __WebpackModuleApi.RequireContext) {
+    r.keys().forEach(r);
+}
+
+// Import all CSS files from features/*/assets/*.css
+importAll(require.context('./features', true, /\/assets\/.*\.css$/));
+
 import './app';
